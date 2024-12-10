@@ -1,8 +1,9 @@
 import express from 'express';
+import { UserRoute } from '../modules/User/user.route';
 const router = express.Router();
 interface TModulesRoutes {
     path: string;
-    // route: express.Router;
+    route: express.Router;
  }
 
 
@@ -10,7 +11,7 @@ interface TModulesRoutes {
 const modulesRoutes : TModulesRoutes[] = [
     {
         path: '/user',
-        // route: ''
+        route: UserRoute
     }
 ]
 
