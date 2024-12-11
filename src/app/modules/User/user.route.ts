@@ -10,4 +10,4 @@ const router = express.Router();
 router.post('/', validateRequest(UserValidation.createUserValidation) , UserController.createUser)
 
 
-export const UserRoute = router;
+export const UserRouter = router;
