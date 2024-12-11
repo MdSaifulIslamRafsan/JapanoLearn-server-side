@@ -1,11 +1,11 @@
 import { ZodError, ZodIssue } from "zod";
-import { TErrorSources } from "../interface/error";
+import { TErrorSources, TGenericError } from "../interface/error";
 import { HttpStatus } from "http-status-ts";
 
 
-const handleZodError = (err: ZodError) => {
-    const StatusCode = HttpStatus.BAD_REQUEST;
-    const errorSource : TErrorSources[] = err.issues.map((issue: ZodIssue) => {
+const handleZodError = (err: ZodError) : TGenericError => {
+    const statusCode = HttpStatus.BAD_REQUEST;
+    const errorSources : TErrorSources[] = err.issues.map((issue: ZodIssue) => {
       return {
         path: issue?.path[issue.path.length - 1],
         message: issue.message,
@@ -13,9 +13,9 @@ const handleZodError = (err: ZodError) => {
     });
 
     return {
-      StatusCode,
+      statusCode,
       message: 'zod validation error',
-      errorSource,
+      errorSources,
     };
   };
 export default handleZodError
