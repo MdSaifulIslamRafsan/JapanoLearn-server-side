@@ -7,7 +7,7 @@ const router = express.Router();
 
 // Define routes
 
-router.post('/', validateRequest(UserValidation.createUserValidation) , UserController.createUser)
+router.post('/register', validateRequest(UserValidation.createUserValidation) , UserController.createUser)
 
 
 export const UserRouter = router;

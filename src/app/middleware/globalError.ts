@@ -13,7 +13,7 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   let errorSource: TErrorSources[] = [
     {
       path: "",
-      message: "something went wrong",
+      message: err.message,
     },
   ];
 
