@@ -2,6 +2,7 @@ import express from 'express';
 import { UserRouter } from '../modules/User/user.route';
 import { AuthRouter } from '../modules/Auth/auth.route';
 import { LessonRoutes } from '../modules/Lesson/lesson.route';
+import { VocabularyRoutes } from '../modules/Vocabulary/vocabulary.route';
 const router = express.Router();
 interface TModulesRoutes {
     path: string;
@@ -20,6 +21,10 @@ const modulesRoutes : TModulesRoutes[] = [
     {
         path: '/lesson',
         route: LessonRoutes
+    },
+    {
+        path: '/vocabulary',
+        route: VocabularyRoutes
     },
 ]
 

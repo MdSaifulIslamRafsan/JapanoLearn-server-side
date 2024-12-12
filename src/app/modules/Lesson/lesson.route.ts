@@ -7,11 +7,13 @@ import verifyToken from "../../middleware/VerifyToken";
 const router = express.Router();
 
 router.post(
-  "/", verifyAdmin, verifyToken,
+  "/", verifyToken , verifyAdmin,
   validateRequest(LessonValidation.updateLessonSchema),
   LessonController.createLesson
 );
 
-router.get("/", verifyToken, verifyAdmin, LessonController.getAllLessons);
+router.get("/",  verifyToken , verifyAdmin, LessonController.getAllLessons);
+
+router.patch("/:id",  verifyToken , verifyAdmin,  LessonController.updateLesson);
 
 export const LessonRoutes = router;

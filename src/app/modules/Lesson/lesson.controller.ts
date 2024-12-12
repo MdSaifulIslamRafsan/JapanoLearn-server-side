@@ -27,7 +27,22 @@ const getAllLessons = catchAsync(async(req , res)=>{
     });
 })
 
+const updateLesson = catchAsync(async(req , res)=>{
+    const { id } = req.params;
+    const updatedLesson = req.body;
+    const result = await LessonService.updateLessonIntoDB(id, updatedLesson);
+    sendResponse(res, {
+        success: true,
+        statusCode: StatusCodes.OK,
+        message: "Lesson updated successfully",
+        data: result
+    })
+
+})
+
 export const LessonController ={
     createLesson,
-    getAllLessons
+    getAllLessons,
+    updateLesson
+
 };
