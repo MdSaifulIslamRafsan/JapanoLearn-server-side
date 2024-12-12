@@ -1,14 +1,15 @@
-import { HttpStatus } from "http-status-ts";
+
 import User from "../User/user.model";
 import bcrypt from "bcrypt";
 import AppError from "../../error/AppError";
 import config from "../../config";
 import jwt from "jsonwebtoken";
+import { StatusCodes } from "http-status-codes";
 
 const loginIntoDB = async (email: string, password: string) => {
   const user = await User.findOne({ email });
   if (!user) {
-    throw new AppError(HttpStatus.NOT_FOUND, "User not found");
+    throw new AppError(StatusCodes.NOT_FOUND, "User not found");
   }
 
   const isMatchPassword = bcrypt.compareSync(
@@ -16,7 +17,7 @@ const loginIntoDB = async (email: string, password: string) => {
     user?.password as string
   );
   if (!isMatchPassword) {
-    throw new AppError(HttpStatus.NOT_FOUND, "Invalid credentials");
+    throw new AppError(StatusCodes.NOT_FOUND, "Invalid credentials");
   }
 
   // JWT token generation

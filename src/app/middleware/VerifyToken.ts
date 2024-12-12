@@ -1,9 +1,9 @@
 import { RequestHandler } from "express";
 import express from "express";
 import AppError from "../error/AppError";
-import { HttpStatus } from "http-status-ts";
 import  jwt  from 'jsonwebtoken';
 import config from "../config";
+import { StatusCodes } from "http-status-codes";
 
 
 interface TDecoded {
@@ -19,12 +19,12 @@ const verifyToken : RequestHandler = async (req : TUserRequest, res, next) => {
    try {
     const token = req.cookies.token;
     if(!token){
-        throw new AppError(HttpStatus.UNAUTHORIZED , "Unauthorized access")
+        throw new AppError(StatusCodes.UNAUTHORIZED , "Unauthorized access")
     }
 
     jwt.verify(token , config.ACCESS_TOKEN_SECRET as string, (err : unknown , decoded : unknown)=>{
         if(err){
-            throw new AppError(HttpStatus.UNAUTHORIZED , "Unauthorized access") 
+            throw new AppError(StatusCodes.UNAUTHORIZED , "Unauthorized access") 
         }
         req.user  = decoded as TDecoded
         next();

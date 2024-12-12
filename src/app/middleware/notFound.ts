@@ -1,8 +1,8 @@
 import  { RequestHandler } from 'express';
-import {HttpStatus} from "http-status-ts"
+import { StatusCodes } from 'http-status-codes';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const NotFoundPageError : RequestHandler = (req , res , next) => {
-    res.status(HttpStatus.NOT_FOUND).send({
+    res.status(StatusCodes.NOT_FOUND).send({
         success : false,
         message : 'Page Not Found',
         error : ''

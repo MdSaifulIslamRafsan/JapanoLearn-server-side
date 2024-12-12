@@ -1,8 +1,8 @@
 import { model, Schema } from "mongoose";
 import { TUser } from "./user.interface";
 import bcrypt from "bcrypt";
-import { HttpStatus } from "http-status-ts";
 import AppError from "../../error/AppError";
+import { StatusCodes } from "http-status-codes";
 
 const userSchema = new Schema<TUser>(
   {
@@ -50,7 +50,7 @@ userSchema.pre("save", async function (next) {
   const isExistEmail = await User.findOne({ email: this.email });
 
   if (isExistEmail) {
-    throw new AppError(HttpStatus.CONFLICT, "Email already exists");
+    throw new AppError(StatusCodes.CONFLICT, "Email already exists");
   }
   next();
 });

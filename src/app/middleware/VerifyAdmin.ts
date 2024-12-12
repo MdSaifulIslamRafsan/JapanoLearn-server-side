@@ -1,7 +1,7 @@
-import { HttpStatus } from "http-status-ts";
 import AppError from "../error/AppError";
 import User from "../modules/User/user.model";
 import  express, {  RequestHandler }  from 'express';
+import { StatusCodes } from "http-status-codes";
 
 interface TDecoded {
     id: string;
@@ -16,14 +16,14 @@ interface TUserRequest extends express.Request {
 const verifyAdmin : RequestHandler = async (req : TUserRequest, res , next )  => {
   try {
     if(!req.user){
-        throw new AppError(HttpStatus.UNAUTHORIZED, "unauthorized access")
+        throw new AppError(StatusCodes.UNAUTHORIZED, "unauthorized access")
     }
     const email = req.user.email;
 
     const user = await User.findOne({ email });
 
     if (user?.role !== "admin") {
-        throw new AppError(HttpStatus.FORBIDDEN ,"forbidden access")
+        throw new AppError(StatusCodes.FORBIDDEN ,"forbidden access")
     }
     next();
   } catch (error) {
