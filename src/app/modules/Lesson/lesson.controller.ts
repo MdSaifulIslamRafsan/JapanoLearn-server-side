@@ -17,7 +17,17 @@ const createLesson = catchAsync(async(req , res) => {
 
 })
 
+const getAllLessons = catchAsync(async(req , res)=>{
+    const result = await LessonService.getAllLessonsIntoDB();
+    sendResponse(res, {
+        success: true,
+        statusCode: StatusCodes.OK,
+        message: "Lessons fetched successfully",
+        data: result
+    });
+})
 
 export const LessonController ={
-    createLesson
+    createLesson,
+    getAllLessons
 };

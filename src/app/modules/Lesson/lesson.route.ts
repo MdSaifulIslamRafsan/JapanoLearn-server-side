@@ -12,6 +12,6 @@ router.post(
   LessonController.createLesson
 );
 
-
+router.get("/", verifyToken, verifyAdmin, LessonController.getAllLessons);
 
 export const LessonRoutes = router;

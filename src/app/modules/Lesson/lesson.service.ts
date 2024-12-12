@@ -12,6 +12,12 @@ const lessonCreateIntoDB = async(payload: TLesson) => {
   return result;
 };
 
+const getAllLessonsIntoDB = async () =>{
+    const result = await Lesson.find();
+    return result;
+}
+
 export const LessonService = {
   lessonCreateIntoDB,
+  getAllLessonsIntoDB,
 };
