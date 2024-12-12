@@ -10,7 +10,7 @@ const router = express.Router();
 // Define routes
 
 router.post('/register', validateRequest(UserValidation.createUserValidation) , UserController.createUser)
-router.get('/user', verifyToken , verifyAdmin,   UserController.getAllUser)
+router.get('/user',verifyToken, verifyAdmin,   UserController.getAllUser)
 
 
 export const UserRouter = router;

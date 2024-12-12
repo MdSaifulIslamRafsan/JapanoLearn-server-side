@@ -36,6 +36,7 @@ const userLogin = catchAsync(async (req , res) => {
 
 })
 
+
 const userLogout = catchAsync(async(req , res) => {
   res.clearCookie('token', {maxAge : 0});
   sendResponse(res , {
