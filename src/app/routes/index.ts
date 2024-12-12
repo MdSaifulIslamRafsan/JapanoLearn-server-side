@@ -1,6 +1,7 @@
 import express from 'express';
 import { UserRouter } from '../modules/User/user.route';
 import { AuthRouter } from '../modules/Auth/auth.route';
+import { LessonRoutes } from '../modules/Lesson/lesson.route';
 const router = express.Router();
 interface TModulesRoutes {
     path: string;
@@ -15,6 +16,10 @@ const modulesRoutes : TModulesRoutes[] = [
     {
         path: '/auth',
         route: AuthRouter
+    },
+    {
+        path: '/lesson',
+        route: LessonRoutes
     },
 ]
 
