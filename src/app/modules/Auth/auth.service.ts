@@ -21,7 +21,10 @@ const loginIntoDB = async (email: string, password: string) => {
 
   // JWT token generation
   const token = jwt.sign(
-    { email: user.email, role: user.role },
+    {
+        id: user._id,
+        email: user.email,
+      },
     config.ACCESS_TOKEN_SECRET as string,
     {
       expiresIn: "90d",

@@ -36,6 +36,17 @@ const userLogin = catchAsync(async (req , res) => {
 
 })
 
+const userLogout = catchAsync(async(req , res) => {
+  res.clearCookie('token', {maxAge : 0});
+  sendResponse(res , {
+    success: true,
+    statusCode : HttpStatus.OK,
+    message: "User logged out successfully",
+    data: null
+  })
+})
+
 export const AuthController = {
-    userLogin
+    userLogin,
+    userLogout
 };
