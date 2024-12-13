@@ -1,3 +1,4 @@
+import { Vocabulary } from "../Vocabulary/vocabulary.model";
 import { TLesson } from "./lesson.interface";
 import Lesson from "./lesson.modle";
 
@@ -13,18 +14,30 @@ const lessonCreateIntoDB = async (payload: TLesson) => {
 };
 
 const getAllLessonsIntoDB = async () => {
-  const result = await Lesson.find();
+  const result = await Lesson.find({});
   return result;
 };
-const updateLessonIntoDB = async (id: string, payload: TLesson) => {
+const updateLessonIntoDB = async (id: number, payload: TLesson) => {
   const result = await Lesson.findOneAndUpdate({ lessonNumber: id }, payload, {
     new: true,
   });
   return result;
 };
 
+const deleteLessonIntoDB = async (id: number) => {
+const result = await Lesson.findOneAndUpdate({ lessonNumber: id } , {isDeleted : true}, {new : true});
+return result;
+}
+
+const getSingleLessonIntoDB = (id: number) => {
+  const result = Vocabulary.findOne({ lessonNo: id });
+  return result;
+};
+
 export const LessonService = {
   lessonCreateIntoDB,
   getAllLessonsIntoDB,
-  updateLessonIntoDB
+  updateLessonIntoDB,
+  getSingleLessonIntoDB,
+  deleteLessonIntoDB
 };

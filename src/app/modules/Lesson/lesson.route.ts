@@ -12,8 +12,10 @@ router.post(
   LessonController.createLesson
 );
 
-router.get("/",  verifyToken , verifyAdmin, LessonController.getAllLessons);
+router.get("/",  verifyToken , LessonController.getAllLessons);
 
 router.patch("/:id",  verifyToken , verifyAdmin,  LessonController.updateLesson);
+router.delete("/:id",  verifyToken , verifyAdmin,  LessonController.deleteLesson);
+router.get("/:id",  verifyToken ,  LessonController.getSingleLesson);
 
 export const LessonRoutes = router;
