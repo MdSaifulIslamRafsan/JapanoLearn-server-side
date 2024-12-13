@@ -14,7 +14,30 @@ const lessonCreateIntoDB = async (payload: TLesson) => {
 };
 
 const getAllLessonsIntoDB = async () => {
-  const result = await Lesson.find({});
+  const result = await Lesson.aggregate([
+    {
+      $lookup: {
+        from: "vocabularies", 
+        localField: "lessonNumber", 
+        foreignField: "lessonNo", 
+        as: "vocabularyDetails", 
+      },
+    },
+    {
+      $addFields: {
+        vocabularyCount: { $size: "$vocabularyDetails" }, 
+      },
+    },
+    {
+      $project: {
+        lessonName: 1,
+        lessonNumber: 1,
+        vocabularyCount: 1,
+      },
+    },
+  ]);
+
+ 
   return result;
 };
 const updateLessonIntoDB = async (id: number, payload: TLesson) => {
@@ -25,9 +48,13 @@ const updateLessonIntoDB = async (id: number, payload: TLesson) => {
 };
 
 const deleteLessonIntoDB = async (id: number) => {
-const result = await Lesson.findOneAndUpdate({ lessonNumber: id } , {isDeleted : true}, {new : true});
-return result;
-}
+  const result = await Lesson.findOneAndUpdate(
+    { lessonNumber: id },
+    { isDeleted: true },
+    { new: true }
+  );
+  return result;
+};
 
 const getSingleLessonIntoDB = (id: number) => {
   const result = Vocabulary.findOne({ lessonNo: id });
@@ -39,5 +66,5 @@ export const LessonService = {
   getAllLessonsIntoDB,
   updateLessonIntoDB,
   getSingleLessonIntoDB,
-  deleteLessonIntoDB
+  deleteLessonIntoDB,
 };

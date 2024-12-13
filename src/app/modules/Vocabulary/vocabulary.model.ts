@@ -10,8 +10,13 @@ const VocabularySchema = new Schema(
     word: { type: String, required: true },
     pronunciation: { type: String, required: true },
     whenToSay: { type: String, required: true },
+    meaning : { type: String, required : true },
     lessonNo: { type: Number, required: true },
     adminEmail: { type: String, required: true },
+    isDeleted : {
+      type : Boolean,
+      default : false
+  }
   },
   { timestamps: true }
 );

@@ -9,6 +9,10 @@ const router = express.Router();
 
 router.post('/', verifyToken , verifyAdmin , validateRequest(vocabularyValidation.createVocabularyValidation) , VocabularyController.createVocabulary )
 
+router.get('/', verifyToken , VocabularyController.getAllVocabulary )
+
+router.put('/:id', verifyToken , verifyAdmin, validateRequest(vocabularyValidation.updateVocabularyValidation) , VocabularyController.updateVocabulary )
+
 
 
 export const VocabularyRoutes = router
