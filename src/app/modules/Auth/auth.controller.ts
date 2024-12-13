@@ -47,15 +47,18 @@ const userLogin = catchAsync(async (req , res) => {
 })
 
 
-const userLogout = catchAsync(async(req , res) => {
-  res.clearCookie('token', {maxAge : 0});
-  sendResponse(res , {
+const userLogout = catchAsync(async (req, res) => {
+  
+  res.clearCookie('token', { path: '/', httpOnly: true });
+  
+  sendResponse(res, {
     success: true,
-    statusCode : StatusCodes.OK,
+    statusCode: StatusCodes.OK,
     message: "User logged out successfully",
-    data: null
-  })
-})
+    data: null,
+  });
+});
+
 const getCurrentUser = catchAsync(async (req : TUserRequest, res) => {
   if(!req.user){
     throw new AppError(StatusCodes.UNAUTHORIZED, "unauthorized access")

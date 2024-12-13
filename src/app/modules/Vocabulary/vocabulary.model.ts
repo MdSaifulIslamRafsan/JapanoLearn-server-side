@@ -1,5 +1,9 @@
 import { model, Schema } from "mongoose";
 import { TVocabulary } from "./vocabulary.interface";
+import Lesson from "../Lesson/lesson.modle";
+import AppError from "../../error/AppError";
+import { StatusCodes } from "http-status-codes";
+import User from "../User/user.model";
 
 const VocabularySchema = new Schema(
   {
@@ -11,5 +15,28 @@ const VocabularySchema = new Schema(
   },
   { timestamps: true }
 );
+
+VocabularySchema.pre('save', async function (next) {
+      const existingLesson = await Lesson.findOne({ lessonNumber: this.lessonNo });
+  
+      if (!existingLesson) {
+        throw new AppError(StatusCodes.NOT_FOUND , `Lesson number ${this.lessonNo} does not exist in the Lesson Data.`);
+      }
+  
+      next();
+  });
+VocabularySchema.pre('save', async function (next) {
+      const existingAdmin = await User.findOne({ email: this.adminEmail });
+  
+      if (!existingAdmin) {
+        throw new AppError(StatusCodes.NOT_FOUND, `Admin with email ${this.adminEmail} does not exist.`);
+      }
+      if (!(existingAdmin.role === 'admin')) {
+        throw new AppError(StatusCodes.FORBIDDEN, 'User does not have the required admin role.');
+      }
+  
+      next();
+  });
+  
 
 export const Vocabulary = model<TVocabulary>("Vocabulary", VocabularySchema);

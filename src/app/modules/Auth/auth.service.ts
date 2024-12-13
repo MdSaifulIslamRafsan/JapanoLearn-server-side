@@ -35,8 +35,9 @@ const loginIntoDB = async (email: string, password: string) => {
   return { user, token };
 };
 
+
 const getCurrentUserIntoDB = async(email : string) => {
-  const result = await User.findOne({ email });
+  const result = await User.findOne({ email }).select('-password');
   return result;
 }
 

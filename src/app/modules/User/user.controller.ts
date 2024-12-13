@@ -25,7 +25,28 @@ const getAllUser = catchAsync(async (req , res) => {
   })
 })
 
+const makeUserAndAdmin = catchAsync(async(req , res) => {
+  const {id} = req.params;
+  const {role} = req.body;
+
+
+  const result = await UserService.makeUserAndAdminIntoDB(id, role);
+
+  sendResponse(res, {
+    success : true,
+    statusCode: StatusCodes.OK,
+    message: `Role updated to ${role}`,
+    data: result,
+  })
+
+
+
+  
+
+})
+
 export const UserController = {
   createUser,
   getAllUser,
+  makeUserAndAdmin
 };

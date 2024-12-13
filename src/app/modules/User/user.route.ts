@@ -11,6 +11,7 @@ const router = express.Router();
 
 router.post('/register', validateRequest(UserValidation.createUserValidation) , UserController.createUser)
 router.get('/user',verifyToken, verifyAdmin,   UserController.getAllUser)
+router.patch('/user/:id',verifyToken, verifyAdmin, UserController.makeUserAndAdmin)
 
 
 export const UserRouter = router;

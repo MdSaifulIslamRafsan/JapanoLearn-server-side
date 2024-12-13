@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post('/login', AuthController.userLogin );
 router.get('/currentUser', verifyToken , AuthController.getCurrentUser );
-router.post('/logout', AuthController.userLogout );
+router.get('/logout', AuthController.userLogout );
 
 
 

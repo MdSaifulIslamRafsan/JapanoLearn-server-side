@@ -5,6 +5,10 @@ import { VocabularyService } from "./vocabulary.service";
 
 const createVocabulary = catchAsync(async(req, res) => {
   const VocabularyData = req.body;
+
+  
+
+
   const vocabulary = await VocabularyService.createVocabularyIntoDB(VocabularyData);
 
   sendResponse(res, {
