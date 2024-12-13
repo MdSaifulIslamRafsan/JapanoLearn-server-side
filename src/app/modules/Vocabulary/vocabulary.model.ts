@@ -43,5 +43,22 @@ VocabularySchema.pre('save', async function (next) {
       next();
   });
   
+  // Query Middleware
+  VocabularySchema.pre('find', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
+
+VocabularySchema.pre('findOne', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
+
+
+
+VocabularySchema.pre('aggregate', function (next) {
+  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
+  next();
+});
 
 export const Vocabulary = model<TVocabulary>("Vocabulary", VocabularySchema);

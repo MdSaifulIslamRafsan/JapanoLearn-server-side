@@ -13,6 +13,8 @@ router.get('/', verifyToken , VocabularyController.getAllVocabulary )
 
 router.put('/:id', verifyToken , verifyAdmin, validateRequest(vocabularyValidation.updateVocabularyValidation) , VocabularyController.updateVocabulary )
 
+router.delete('/:id', verifyToken , verifyAdmin, VocabularyController.deleteVocabulary )
+
 
 
 export const VocabularyRoutes = router

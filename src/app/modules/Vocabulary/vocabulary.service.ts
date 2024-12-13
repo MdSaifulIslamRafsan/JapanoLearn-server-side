@@ -14,20 +14,23 @@ const getAllVocabularyFromDB = async () => {
 
 const updateVocabularyIntoDB = async (id: string, payload: Partial<TVocabulary>) => {
   const objectId = new mongoose.Types.ObjectId(id);
-  const object = await Vocabulary.findById(objectId);
-  console.log('18 line' , object);
-
-
+  
     const result = await Vocabulary.findByIdAndUpdate(objectId, payload, { new: true });
-    console.log('22 line' , payload)
-    console.log('23 line' , result)
     return result;
 };
+
+const deleteVocabularyFromDB = async (id: string) => {
+  const objectId = new mongoose.Types.ObjectId(id);
+  
+    const result = await Vocabulary.findByIdAndUpdate(objectId , {isDeleted :  true} , { new: true });
+    return result;
+}
 
 
 
 export const VocabularyService = {
     createVocabularyIntoDB,
     getAllVocabularyFromDB,
-    updateVocabularyIntoDB
+    updateVocabularyIntoDB,
+    deleteVocabularyFromDB
 }
