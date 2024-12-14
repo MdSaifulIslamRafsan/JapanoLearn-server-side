@@ -1,4 +1,3 @@
-import { Vocabulary } from "../Vocabulary/vocabulary.model";
 import { TLesson } from "./lesson.interface";
 import Lesson from "./lesson.modle";
 
@@ -17,15 +16,15 @@ const getAllLessonsIntoDB = async () => {
   const result = await Lesson.aggregate([
     {
       $lookup: {
-        from: "vocabularies", 
-        localField: "lessonNumber", 
-        foreignField: "lessonNo", 
-        as: "vocabularyDetails", 
+        from: "vocabularies",
+        localField: "lessonNumber",
+        foreignField: "lessonNo",
+        as: "vocabularyDetails",
       },
     },
     {
       $addFields: {
-        vocabularyCount: { $size: "$vocabularyDetails" }, 
+        vocabularyCount: { $size: "$vocabularyDetails" },
       },
     },
     {
@@ -37,7 +36,6 @@ const getAllLessonsIntoDB = async () => {
     },
   ]);
 
- 
   return result;
 };
 const updateLessonIntoDB = async (id: number, payload: TLesson) => {
@@ -48,6 +46,7 @@ const updateLessonIntoDB = async (id: number, payload: TLesson) => {
 };
 
 const deleteLessonIntoDB = async (id: number) => {
+  console.log('line no 49', id);
   const result = await Lesson.findOneAndUpdate(
     { lessonNumber: id },
     { isDeleted: true },
@@ -56,9 +55,34 @@ const deleteLessonIntoDB = async (id: number) => {
   return result;
 };
 
-const getSingleLessonIntoDB = (id: number) => {
-  const result = Vocabulary.findOne({ lessonNo: id });
-  return result;
+const getSingleLessonIntoDB = async (id: number) => {
+
+  const result = await Lesson.aggregate([
+    { $match: { lessonNumber: id, isDeleted: false } },
+    {
+      $lookup: {
+        from: "vocabularies",
+        localField: "lessonNumber",
+        foreignField: "lessonNo",
+        as: "vocabulary",
+      },
+    },
+    {
+      // Format the output
+      $project: {
+        _id: 0,
+        "vocabulary.word": 1,
+        "vocabulary.pronunciation": 1,
+        "vocabulary.whenToSay": 1,
+        "vocabulary.meaning": 1,
+        "vocabulary.adminEmail": 1,
+        "vocabulary.lessonNo": 1,
+        "vocabulary.lessonName": "$lessonDetails.lessonName",
+      },
+    },
+  ]);
+
+  return result[0];
 };
 
 export const LessonService = {
